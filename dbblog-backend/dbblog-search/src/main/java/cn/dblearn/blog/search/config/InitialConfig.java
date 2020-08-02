@@ -1,6 +1,7 @@
 package cn.dblearn.blog.search.config;
 
-import cn.dblearn.blog.common.constants.RabbitMqConstants;
+import cn.dblearn.blog.common.constants.MqConstants;
+import cn.dblearn.blog.common.util.KafkaUtils;
 import cn.dblearn.blog.common.util.RabbitMqUtils;
 import com.rabbitmq.client.ConnectionFactory;
 import javax.annotation.PostConstruct;
@@ -21,15 +22,19 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(ElasticsearchClient.class)
 public class InitialConfig {
 
+//    @Resource
+//    private RabbitMqUtils rabbitMqUtils;
+
     @Resource
-    private RabbitMqUtils rabbitMqUtils;
+    private KafkaUtils kafkaMqUtils;
 
     /**
      * 项目启动时重新导入索引
      */
     @PostConstruct
     public void initEsIndex(){
-        rabbitMqUtils.send(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE,"dbblog-search init index");
+//        rabbitMqUtils.send(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE,"dbblog-search init index");
+        kafkaMqUtils.send(MqConstants.REFRESH_ES_INDEX_QUEUE,"dbblog-search init index");
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setAutomaticRecoveryEnabled(false);
     }

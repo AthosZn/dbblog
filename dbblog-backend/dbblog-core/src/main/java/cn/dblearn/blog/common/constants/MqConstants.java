@@ -8,6 +8,6 @@ package cn.dblearn.blog.common.constants;
  * @email 571002217@qq.com
  * @description
  */
-public class RabbitMqConstants {
+public class MqConstants {
     public static final String REFRESH_ES_INDEX_QUEUE ="dbblog-queue";
 }

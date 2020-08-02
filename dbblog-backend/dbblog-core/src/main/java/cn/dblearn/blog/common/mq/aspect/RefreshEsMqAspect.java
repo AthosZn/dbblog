@@ -1,6 +1,6 @@
 package cn.dblearn.blog.common.mq.aspect;
 
-import cn.dblearn.blog.common.constants.RabbitMqConstants;
+import cn.dblearn.blog.common.constants.MqConstants;
 import cn.dblearn.blog.common.mq.annotation.RefreshEsMqSender;
 import cn.dblearn.blog.common.util.RabbitMqUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -41,7 +41,7 @@ public class RefreshEsMqAspect {
         Method method = signature.getMethod();
         RefreshEsMqSender senderAnnotation = method.getAnnotation(RefreshEsMqSender.class);
         // 发送刷新信息
-        rabbitMqUtils.send(RabbitMqConstants.REFRESH_ES_INDEX_QUEUE,senderAnnotation.sender()+" "+senderAnnotation.msg());
+        rabbitMqUtils.send(MqConstants.REFRESH_ES_INDEX_QUEUE,senderAnnotation.sender()+" "+senderAnnotation.msg());
         return result;
     }
 }
